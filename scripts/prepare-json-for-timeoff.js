@@ -12,7 +12,7 @@ const
 let
   hd = new Holidays(),
   result = {},
-  year = 2018;
+  year = 2019;
 
 // get supported countries
 let countries = hd.getCountries();
