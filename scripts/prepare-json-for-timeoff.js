@@ -12,19 +12,18 @@ const
 let
   hd = new Holidays(),
   result = {},
-  year = 2019;
+  years = [2018, 2019, 2020, 2021];
 
 // get supported countries
 let countries = hd.getCountries();
 
-
-function getHolidaysForCountryAndYear(country_code, year) {
+function getHolidaysForCountryAndYear(country_code, years) {
 
   hd.init(country_code);
 
-  return hd
-    .getHolidays(year)
-    .filter(d => d.type === 'public' || d.type === 'bank')
+  const holidays = [].concat( ... years.map(year => hd.getHolidays(year)));
+
+  return holidays.filter(d => d.type === 'public' || d.type === 'bank')
     .map(d => ({ date : d.date.substr(0,10), name : d.name }));
 };
 
@@ -33,7 +32,7 @@ Object.keys( countries ).forEach(country_code => {
 
   result[ country_code ] = {
     name : country_name,
-    bank_holidays : getHolidaysForCountryAndYear(country_code, year),
+    bank_holidays : getHolidaysForCountryAndYear(country_code, years),
   }
 });
 
